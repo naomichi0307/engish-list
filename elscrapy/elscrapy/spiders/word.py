@@ -1,5 +1,7 @@
 import scrapy
 import logging
+from elscrapy.items import ElscrapyItem
+from scrapy.loader import ItemLoader
 # from elscrapy.items import ElscrapyItem
 class WordSpider(scrapy.Spider):
     name = 'word'
@@ -19,7 +21,11 @@ class WordSpider(scrapy.Spider):
         # item=ElscrapyItem()
         # item['word']=response.xpath('//*[@id="summary"]/div[2]/p/span[2]/text()').get().replace('\n', '').strip()
         # yield item
-        word=response.xpath('//*[@id="summary"]/div[2]/p/span[2]/text()').get().replace('\n', '').strip()
-        yield{
-            'word':word
-        }
+        
+        #word=response.xpath('//*[@id="summary"]/div[2]/p/span[2]/text()').get().replace('\n', '').strip()
+        loader = ItemLoader(item = ElscrapyItem(), response=response)
+        loader.add_xpath('word', '//*[@id="summary"]/div[2]/p/span[2]/text()')
+        yield loader.load_item()
+        # yield{
+        #     'word':word
+        # }
