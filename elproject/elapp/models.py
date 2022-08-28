@@ -11,7 +11,14 @@ class elModel(models.Model):
         choices = PRIORITY
 
     )
-
+    #mean = models.CharField(max_length=100)
     duedate=models.DateField()
     def __str__(self):
+        return self.word
+
+class Newword(models.Model):
+    word = models.CharField(max_length=25)
+    date = models.DateField()
+
+    def  __str__(self):
         return self.word
