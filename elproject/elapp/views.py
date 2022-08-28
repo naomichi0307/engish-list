@@ -4,11 +4,12 @@ from .models import elModel
 from django.urls import reverse_lazy
 import requests
 from bs4 import BeautifulSoup
-import selenium
+from selenium import webdriver
 from django.shortcuts import render
 from .forms import VenueForm
 from django.http import HttpResponseRedirect
-import elscrapy
+from scrapy.crawler import CrawlerProcess
+from scrapy.utils.project import get_project_settings
 # Create your views here.
 
 posted_data = {
