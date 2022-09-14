@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -15,7 +16,10 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1' ,'herokuapp.com']
 
-
+env = environ.Env()
+env.read_env(os.path.join(BASE_DIR, '.env'))
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env('DEBUG')
 # Application definition
 
 INSTALLED_APPS = [
@@ -26,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'elapp'
+    'app.apps.AppConfig',#envで追加した
 ]
 
 MIDDLEWARE = [
@@ -67,7 +72,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
+    'default': env.db(),
 }
 
 
